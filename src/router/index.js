@@ -44,6 +44,34 @@ export const constantRoutes = [
   },
 
   {
+    path: '/customer',
+    component: Layout,
+    redirect: '/customer/achievement',
+    name: 'Customer',
+    meta: { title: 'Customer', icon: 'dashboard' },
+    children: [
+      {
+        path: 'achievement',
+        name: 'Achievement',
+        component: () => import('@/views/customer/index'),
+        meta: { title: '我的业绩', icon: 'dashboard' }
+      },
+      {
+        path: 'own-customer',
+        name: 'OwnCustomer',
+        component: () => import('@/views/customer/index'),
+        meta: { title: '我的客户', icon: 'dashboard' }
+      },
+      {
+        path: 'public-customer',
+        name: 'PublicCustomer',
+        component: () => import('@/views/customer/index'),
+        meta: { title: '公有客户', icon: 'dashboard' }
+      }
+    ]
+  },
+
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
