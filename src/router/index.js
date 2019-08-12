@@ -48,25 +48,31 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/customer/achievement',
     name: 'Customer',
-    meta: { title: 'Customer', icon: 'dashboard' },
+    meta: { title: '客户管理', icon: 'dashboard' },
     children: [
       {
         path: 'achievement',
         name: 'Achievement',
-        component: () => import('@/views/customer/index'),
+        component: () => import('@/views/customer/achievement'),
         meta: { title: '我的业绩', icon: 'dashboard' }
       },
       {
         path: 'own-customer',
         name: 'OwnCustomer',
-        component: () => import('@/views/customer/index'),
+        component: () => import('@/views/customer/own-customer'),
         meta: { title: '我的客户', icon: 'dashboard' }
       },
       {
         path: 'public-customer',
         name: 'PublicCustomer',
-        component: () => import('@/views/customer/index'),
-        meta: { title: '公有客户', icon: 'dashboard' }
+        component: () => import('@/views/customer/public-customer'),
+        meta: { title: '公有客户池', icon: 'dashboard' }
+      },
+      {
+        path: 'tab',
+        name: 'Tab',
+        component: () => import('@/views/customer/tab'),
+        meta: { title: '公有客户池', icon: 'dashboard' }
       }
     ]
   },
