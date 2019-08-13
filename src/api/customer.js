@@ -15,3 +15,11 @@ export function getAchievementRecords(params) {
     params
   })
 }
+
+export function archievementInfoSave(params) {
+  return request({
+    url: '/customer/archievementInfoSave',
+    method: 'get',
+    params
+  })
+}

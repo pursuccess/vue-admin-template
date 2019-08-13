@@ -8,9 +8,14 @@ for (let i = 0; i < count; i++) {
     id: '@id',
     title: '@sentence(5, 10)',
     tel: '15288888888',
-    customer_name: 'name',
+    email: '5984152@qq.com',
+    qq: '@integer(7845895, 14588474152)',
+    nickname: '@first',
+    name: '@first',
     time: '@datetime',
-    money: '@integer(300, 5000)'
+    money: '@integer(300, 5000)',
+    company: '企业名称',
+    type: '客户来源',
   }))
 }
 
@@ -45,6 +50,17 @@ export default [
           total: list.length,
           items: pageList
         }
+      }
+    }
+  },
+
+  {
+    url: '/customer/archievementInfoSave',
+    type: 'get',
+    response: config => {
+      return {
+        code: 20000,
+        data: 'success'
       }
     }
   }

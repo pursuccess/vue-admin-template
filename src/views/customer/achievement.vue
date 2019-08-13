@@ -33,7 +33,7 @@
         </el-table-column>
         <el-table-column align="center" label="客户名称" width="95">
           <template slot-scope="scope">
-            {{ scope.row.customer_name }}
+            {{ scope.row.name }}
           </template>
         </el-table-column>
         <el-table-column label="手机号码" width="110" align="center">
@@ -60,38 +60,8 @@
 
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="fetchData" />
 
-      <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
-        <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-          <el-form-item label="客户名称">
-            <el-input v-model="temp.name" />
-          </el-form-item>
-          <el-form-item label="邮箱">
-            <el-input v-model="temp.mail" />
-          </el-form-item>
-          <el-form-item label="微信昵称">
-            <el-input v-model="temp.nickname" />
-          </el-form-item>
-          <el-form-item label="QQ号">
-            <el-input v-model="temp.qq" />
-          </el-form-item>
-          <el-form-item label="企业名称">
-            <el-input v-model="temp.company" />
-          </el-form-item>
-          <el-form-item label="手机号">
-            <el-input v-model="temp.tel" />
-          </el-form-item>
-          <el-form-item label="客户来源">
-            <el-input v-model="temp.type" />
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">
-            Cancel
-          </el-button>
-          <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
-            Confirm
-          </el-button>
-        </div>
+      <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :close-on-click-modal=false width="70%" custom-class="achievementDialog">
+        <tab :temp="temp"></tab>
       </el-dialog>
     </div>
   </div>
@@ -99,14 +69,16 @@
 
 <script>
 import Top from './components/Top'
+import Tab from './components/Tab'
 import Pagination from '@/components/Pagination'
 import { getAchievementList } from '@/api/customer'
 
 export default {
-    name: 'Customer',
+    name: 'Achievement',
     components: {
       Top,
-      Pagination
+      Pagination,
+      Tab
     },
     created() {
       this.fetchData()
@@ -135,13 +107,9 @@ export default {
           tel: '',
           type: '',
         },
-        rules: {
-          type: [{ required: true, message: 'type is required', trigger: 'change' }],
-          timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-          title: [{ required: true, message: 'title is required', trigger: 'blur' }]
-        },
-        dialogFormVisible: true,
+        dialogFormVisible: false,
         dialogTitle: '',
+        dialogEditStatus: false,
       }
     },
     computed: {
@@ -163,10 +131,17 @@ export default {
       handleDetail(row) {
         this.temp = Object.assign({}, row) // copy obj
         this.dialogFormVisible = true
-        this.dialogTitle = row.customer_name
+        this.dialogTitle = row.name
         this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
+          // this.$refs['dataForm'].clearValidate()
         })
+      },
+      dialogFormEdit() {
+        this.dialogEditStatus = true;
+
+      },
+      dialogFormSave() {
+        this.dialogEditStatus = false;
       }
     }
 }
@@ -191,6 +166,17 @@ export default {
       &:first-child {
         font-weight: bold;
       }
+    }
+  }
+  .no-border {
+    color: #000;
+    .el-input__inner {
+      border: none;
+    }
+  }
+  .achievementDialog {
+    .el-dialog__body {
+      padding: 0;
     }
   }
 </style>

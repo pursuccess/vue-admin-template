@@ -1,12 +1,13 @@
 <template>
   <div>
     <el-table
-      v-loading="loading"
+      v-loading="listLoading"
       :data="list"
       element-loading-text="Loading"
       border
       fit
       highlight-current-row
+      height="400px"
     >
       <el-table-column width="200px" label="时间">
         <template slot-scope="scope">
@@ -29,7 +30,7 @@ import Pagination from '@/components/Pagination'
 import { getAchievementRecords } from '@/api/customer'
 
 export default {
-  name: 'TabPane',
+  name: 'AchievementTabPane',
   components: {
     Pagination
   },
@@ -46,13 +47,13 @@ export default {
   data() {
     return {
       list: null,
+      listLoading: false,
       total: 0,
       listQuery: {
         page: 1,
         limit: 10,
         type: this.type
-      },
-      loading: false
+      }
     }
   },
   created() {
@@ -60,10 +61,11 @@ export default {
   },
   methods: {
     getList() {
-      this.loading = true
+      this.listLoading = true
       getAchievementRecords(this.listQuery).then(response => {
         this.list = response.data.items
-        this.loading = false
+        this.listLoading = false
+        this.total = response.data.total
       })
     }
   }

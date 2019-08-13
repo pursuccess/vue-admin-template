@@ -68,12 +68,6 @@ export const constantRoutes = [
         component: () => import('@/views/customer/public-customer'),
         meta: { title: '公有客户池', icon: 'dashboard' }
       },
-      {
-        path: 'tab',
-        name: 'Tab',
-        component: () => import('@/views/customer/tab'),
-        meta: { title: '公有客户池', icon: 'dashboard' }
-      }
     ]
   },
 
