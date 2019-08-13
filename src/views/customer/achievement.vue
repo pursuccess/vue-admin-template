@@ -80,9 +80,6 @@ export default {
       Pagination,
       Tab
     },
-    created() {
-      this.fetchData()
-    },
     data() {
       return {
         mainTotal: [
@@ -103,14 +100,16 @@ export default {
           nickname: '',
           qq: '',
           company: '',
-          nickname: '',
           tel: '',
-          type: '',
+          origin: '',
         },
         dialogFormVisible: false,
         dialogTitle: '',
         dialogEditStatus: false,
       }
+    },
+    created() {
+      this.fetchData()
     },
     computed: {
       
@@ -135,13 +134,6 @@ export default {
         this.$nextTick(() => {
           // this.$refs['dataForm'].clearValidate()
         })
-      },
-      dialogFormEdit() {
-        this.dialogEditStatus = true;
-
-      },
-      dialogFormSave() {
-        this.dialogEditStatus = false;
       }
     }
 }

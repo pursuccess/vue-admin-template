@@ -1,13 +1,16 @@
 <template>
-  <div class="archievement-container">
-
-  </div>
+  <customer-info />
 </template>
 
 <script>
+import CustomerInfo from './components/CustomerInfo'
+
 export default {
-  name: "Achievement"
-};
+  name: "OwnCustomer",
+  components: {
+    CustomerInfo
+  },
+}
 </script>
 
 <style lang='scss' scoped>

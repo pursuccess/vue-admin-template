@@ -5,7 +5,7 @@
         <div style="padding: 0 15px;">{{temp.name}}</div>
       </el-form-item>
       <el-form-item label="邮箱">
-        <el-input v-model="temp.email" :class="{'no-border': !editStatus}"/>
+        <el-input v-model="temp.mail" :class="{'no-border': !editStatus}"/>
       </el-form-item>
       <el-form-item label="微信昵称">
         <div style="padding: 0 15px;">{{temp.nickname}}</div>
@@ -20,7 +20,7 @@
         <el-input v-model="temp.tel" />
       </el-form-item>
       <el-form-item label="客户来源">
-        <div style="padding: 0 15px;">{{temp.type}}</div>
+        <div style="padding: 0 15px;">{{temp.origin}}</div>
       </el-form-item>
       <el-form-item>
         <el-button @click="formEdit" v-show="!editStatus">编辑</el-button>
@@ -48,9 +48,8 @@ export default {
           nickname: '',
           qq: '',
           company: '',
-          nickname: '',
           tel: '',
-          type: '',
+          origin: '',
         }
       }
     },

@@ -33,9 +33,8 @@ export default {
           nickname: '',
           qq: '',
           company: '',
-          nickname: '',
           tel: '',
-          type: '',
+          origin: '',
         }
       }
     },

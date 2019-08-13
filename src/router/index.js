@@ -67,7 +67,7 @@ export const constantRoutes = [
         name: 'PublicCustomer',
         component: () => import('@/views/customer/public-customer'),
         meta: { title: '公有客户池', icon: 'dashboard' }
-      },
+      }
     ]
   },
 

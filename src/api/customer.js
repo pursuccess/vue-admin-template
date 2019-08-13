@@ -23,3 +23,11 @@ export function archievementInfoSave(params) {
     params
   })
 }
+
+export function getCustomerList(params) {
+  return request({
+    url: '/customer/customerList',
+    method: 'get',
+    params
+  })
+}

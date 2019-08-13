@@ -27,8 +27,8 @@
         <el-col :span="8" :offset="4">
           <el-date-picker v-model="searchTime" type="date" placeholder="Pick a date" style="width: 100%;" v-if="routhPath=='/customer/achievement'"/>
           <div v-if="routhPath=='/customer/public-customer'">
-            <el-input v-model="searchInput" placeholder="请输入客户名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-            <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
+            <el-input v-model="searchInput" placeholder="请输入客户名" style="width: 200px;" class="search-item" @keyup.enter.native="handleFilter" />
+            <el-button class="search-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
           </div>
         </el-col>
       </el-row>
