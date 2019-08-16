@@ -1,30 +1,17 @@
 <template>
-    <div class="customer-container">
-        <top />
-        <router-view :key="key" />
-    </div>
+  <customer-info :is-public="true" />
 </template>
 
 <script>
-import Top from './components/Top'
+import CustomerInfo from './components/CustomerInfo'
+
 export default {
-    name: 'Customer',
-    data() {
-      return {
-        
-      }
-    },
-    computed: {
-      key() {
-        return this.$route.path
-      }
-    },
-    components: {
-      Top,
-    }
+  name: "PublicCustomer",
+  components: {
+    CustomerInfo
+  },
 }
 </script>
 
 <style lang='scss' scoped>
-
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <customer-info />
+  <customer-info :is-public="false" />
 </template>
 
 <script>

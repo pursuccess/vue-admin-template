@@ -31,3 +31,27 @@ export function getCustomerList(params) {
     params
   })
 }
+
+export function customerDelay(id) {
+  return request({
+    url: '/customer/customerDelay',
+    method: 'get',
+    params: { id }
+  })
+}
+
+export function customerTransform(params) {
+  return request({
+    url: '/customer/customerTransform',
+    method: 'get',
+    params
+  })
+}
+
+export function customerFollow(params) {
+  return request({
+    url: '/customer/customerFollow',
+    method: 'get',
+    params
+  })
+}

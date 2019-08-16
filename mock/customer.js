@@ -20,9 +20,9 @@ for (let i = 0; i < count; i++) {
     tagText: '我是标签',
     tagId: '@integer(0, 8)',
     sellerCurrent: 'Lola',
-    distributeTime: '@datetime',
+    distributeTime: '@date',
     sellerPast: 'Bob',
-    loginTime: '@datatime'
+    loginTime: '@date'
   }))
 }
 
