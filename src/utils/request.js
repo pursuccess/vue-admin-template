@@ -7,7 +7,7 @@ import { getToken } from '@/utils/auth'
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 15000 // request timeout
 })
 
 // request interceptor
@@ -19,7 +19,7 @@ service.interceptors.request.use(
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['X-Token'] = getToken()
+      config.headers['SM-Token'] = getToken()
     }
     return config
   },
@@ -43,12 +43,13 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
+    const RESPONSE_OK = 1
     const res = response.data
 
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
+    if (res.result !== RESPONSE_OK) {
       Message({
-        message: res.message || 'Error',
+        message: res.detail || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
@@ -66,7 +67,7 @@ service.interceptors.response.use(
           })
         })
       }
-      return Promise.reject(new Error(res.message || 'Error'))
+      return Promise.reject(new Error(res.detail || 'Error'))
     } else {
       return res
     }

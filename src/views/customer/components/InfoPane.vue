@@ -14,13 +14,13 @@
         <div style="padding: 0 15px;">{{temp.qq}}</div>
       </el-form-item>
       <el-form-item label="企业名称">
-        <el-input v-model="temp.company" />
+        <el-input v-model="temp.company" :class="{'no-border': !editStatus}"/>
       </el-form-item>
       <el-form-item label="手机号">
-        <el-input v-model="temp.tel" />
+        <el-input v-model="temp.tel" :class="{'no-border': !editStatus}" />
       </el-form-item>
       <el-form-item label="客户来源">
-        <div style="padding: 0 15px;">{{temp.origin}}</div>
+        <div style="padding: 0 15px;">{{temp.userOrigin}}</div>
       </el-form-item>
       <el-form-item>
         <el-button @click="formEdit" v-show="!editStatus">编辑</el-button>
@@ -42,14 +42,14 @@ export default {
       type: Object,
       default: function () {
         return {
-          id: undefined,
+          userId: undefined,
           name: '',
           mail: '',
           nickname: '',
           qq: '',
           company: '',
           tel: '',
-          origin: '',
+          userOrigin: '',
         }
       }
     },
@@ -75,9 +75,18 @@ export default {
       this.editStatus = false;
     },
     formSave() {
-      this.$emit('formSave',this.temp);
+      let query = {userId: this.temp.userId, mail: this.temp.mail, company: this.temp.company, tel: this.temp.tel}
+      this.$emit('formSave',query)
     }
   }
 }
 </script>
+
+<style lang="scss">
+  .no-border {
+    .el-input__inner {
+      border: none;
+    }
+  }
+</style>
 

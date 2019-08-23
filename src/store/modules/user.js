@@ -1,11 +1,14 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
   name: '',
-  avatar: ''
+  avatar: '',
+  position: '',
+  department: '',
+  achievement: []
 }
 
 const mutations = {
@@ -17,6 +20,15 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_POSITION: (state, position) => {
+    state.position = position
+  },
+  SET_DEPARTMENT: (state, department) => {
+    state.department = department
+  },
+  SET_ACHIEVEMENT: (state, achievement) => {
+    state.achievement = achievement
   }
 }
 
@@ -46,10 +58,13 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
 
-        const { name, avatar } = data
+        const { name, avatar, position, department, achievement } = data
 
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
+        commit('SET_POSITION', position)
+        commit('SET_DEPARTMENT', department)
+        commit('SET_ACHIEVEMENT', achievement)
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -58,16 +73,26 @@ const actions = {
   },
 
   // user logout
+  // logout({ commit, state }) {
+  //   return new Promise((resolve, reject) => {
+  //     logout(state.token).then(() => {
+  //       commit('SET_TOKEN', '')
+  //       removeToken()
+  //       resetRouter()
+  //       resolve()
+  //     }).catch(error => {
+  //       reject(error)
+  //     })
+  //   })
+  // },
+
+  // 退出不请求后台
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        commit('SET_TOKEN', '')
-        removeToken()
-        resetRouter()
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
+      commit('SET_TOKEN', '')
+      removeToken()
+      resetRouter()
+      resolve()
     })
   },
 

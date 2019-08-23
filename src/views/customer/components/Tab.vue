@@ -14,7 +14,7 @@
 <script>
 import TabPane from './TabPane'
 import InfoPane from './InfoPane'
-import { archievementInfoSave } from '@/api/customer'
+import { customerInfoSave } from '@/api/customer'
 
 export default {
   name: 'AchievementTab',
@@ -27,14 +27,14 @@ export default {
       type: Object,
       default: function () {
         return {
-          id: undefined,
+          userId: undefined,
           name: '',
           mail: '',
           nickname: '',
           qq: '',
           company: '',
           tel: '',
-          origin: '',
+          userOrigin: '',
         }
       }
     },
@@ -62,7 +62,7 @@ export default {
   methods: {
     formSave(data) {
       this.infoLoading = true
-      archievementInfoSave(data).then(response => {
+      customerInfoSave(data).then(response => {
         this.$refs['infoForm'].editStatus = false
         this.infoLoading = false
         this.$message({
@@ -76,7 +76,5 @@ export default {
 </script>
 
 <style scoped>
-  .tab-container {
-    
-  }
+ 
 </style>

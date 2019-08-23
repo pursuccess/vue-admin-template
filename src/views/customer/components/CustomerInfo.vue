@@ -11,41 +11,55 @@
             <div>
               <el-form :model="info" label-position="right" label-width="130px" size="small">
                 <el-form-item label="注册时间">
-                  <el-date-picker v-model="info.regTime" type="date" placeholder="请选择" style="width: 100%;" />
+                  <el-date-picker v-model="info.registerTime" type="date" placeholder="请选择" />
                 </el-form-item>
                 <el-form-item label="最近登录时间">
-                  <el-date-picker v-model="info.loginTime" type="date" placeholder="请选择" style="width: 100%;" />
+                  <el-date-picker v-model="info.loginTime" type="date" placeholder="请选择" />
                 </el-form-item>
                 <el-form-item label="客户状态">
-                  <el-select v-model="info.level" placeholder="请选择">
-                    <el-option v-for="(item, key) in info.levelList" :key="key" :label="item.name" :value="item.value" />
+                  <el-select v-model="info.userLevel" placeholder="请选择">
+                    <el-option v-for="(item, key) in levelList" :key="key" :label="item.name" :value="item.value" />
                   </el-select>
                 </el-form-item>
                 <el-form-item label="客户所在地">
-                  <el-select v-model="info.location" placeholder="请选择">
-                    <el-option v-for="(item, key) in info.locationList" :key="key" :label="item.name" :value="item.value"/>
-                  </el-select>
+                  <el-cascader
+                    placeholder="请选择"
+                    change-on-select
+                    :options="locationData"
+                    v-model="locationSelect"
+                    @change="locationChange">
+                  </el-cascader>
                 </el-form-item>
                 <el-form-item label="客户来源">
-                  <el-select v-model="info.origin" placeholder="请选择">
-                    <el-option v-for="(item, key) in info.originTypeList" :key="key" :label="item.name" :value="item.value" />
+                  <el-select v-model="info.userOrigin" placeholder="请选择">
+                    <el-option v-for="(item, key) in originTypeList" :key="key" :label="item.name" :value="item.value" />
                   </el-select>
                 </el-form-item>
                 <el-form-item label="已订购增值服务">
                   <el-select v-model="info.orderService" placeholder="请选择">
-                    <el-option v-for="(item, key) in info.orderServiceList" :key="key" :label="item.name" :value="item.value" />
+                    <el-option v-for="(item, key) in orderServiceList" :key="key" :label="item.name" :value="item.value" />
                   </el-select>
                 </el-form-item>
-                <el-form-item label="客户绑定店铺近3个月每月销售金额">
-                  <el-col :span="11">
-                    <el-input v-model.number="info.salesMin" placeholder="最小值"/>
-                  </el-col>
-                  <el-col :span="1" class="salesline">-</el-col>
-                  <el-col :span="11">
-                    <el-input v-model.number="info.salesMax" placeholder="最大值"/>
-                  </el-col>
+                <el-form-item label="客户绑定店铺近3个月每月销售金额（单位：万元）" class="sales">
+                  <el-form-item>
+                    <el-select v-model="salesRangeValue" placeholder="快捷选择" @change="salesRangeChange">
+                      <el-option v-for="(item, key) in salesRange" :key="key" :label="item.text" :value="item.value" />
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="自定义" label-width="60px" style="margin-top:-20px">
+                    <el-row>
+                      <el-col :span="11">
+                        <el-input v-model.number="info.salesMin" placeholder="最小值"/>
+                      </el-col>
+                      <el-col :span="2" class="line">-</el-col>
+                      <el-col :span="11">
+                        <el-input v-model.number="info.salesMax" placeholder="最大值"/>
+                      </el-col>
+                    </el-row>
+                  </el-form-item>
                 </el-form-item>
-                <el-form-item>
+                <el-form-item label="客户标签">
+                  <el-input v-model="info.tag" placeholder=""/>
                 </el-form-item>
               </el-form>
             </div>
@@ -57,15 +71,39 @@
               <span>使用情况</span>
             </div>
             <div>
-              <el-form :model="info" label-position="right" label-width="120px" size="small">
+              <el-form :model="info" label-position="right" label-width="180px" size="small">
                 <el-form-item label="近30天使用次数">
-                  <el-input v-model.number="info.useTimes" />
+                  <el-row>
+                    <el-col :span="11">
+                      <el-input v-model.number="info.useTimesMin" placeholder="最小值"/>
+                    </el-col>
+                    <el-col :span="2" class="line">-</el-col>
+                    <el-col :span="11">
+                      <el-input v-model.number="info.useTimesMax" placeholder="最大值"/>
+                    </el-col>
+                  </el-row>
                 </el-form-item>
-                <el-form-item label="产品剩余时间">
-                  <el-input v-model="info.remainTime"/>
+                <el-form-item label="产品剩余时间（单位：天）">
+                  <el-row>
+                    <el-col :span="11">
+                      <el-input v-model.number="info.remainTimeMin" placeholder="最小值"/>
+                    </el-col>
+                    <el-col :span="2" class="line">-</el-col>
+                    <el-col :span="11">
+                      <el-input v-model.number="info.remainTimeMax" placeholder="最大值"/>
+                    </el-col>
+                  </el-row>
                 </el-form-item>
                 <el-form-item label="剩余积分">
-                  <el-input v-model="info.remainIntegral"/>
+                  <el-row>
+                    <el-col :span="11">
+                      <el-input v-model.number="info.remainIntegralMin" placeholder="最小值"/>
+                    </el-col>
+                    <el-col :span="2" class="line">-</el-col>
+                    <el-col :span="11">
+                      <el-input v-model.number="info.remainIntegralMax" placeholder="最大值"/>
+                    </el-col>
+                  </el-row>
                 </el-form-item>
               </el-form>
             </div>
@@ -80,7 +118,7 @@
               <el-form :model="info" label-position="right" label-width="120px" size="small">
                 <el-form-item label="上次跟进方式">
                   <el-select v-model="info.followType" placeholder="请选择">
-                    <el-option v-for="(item, key) in info.followTypeList" :key="key" :label="item.name" :value="item.value" />
+                    <el-option v-for="(item, key) in followTypeList" :key="key" :label="item.name" :value="item.value" />
                   </el-select>
                 </el-form-item>
                 <el-form-item label="上次跟进时间">
@@ -104,8 +142,8 @@
 
     <div class="table-container">
       <div class="flex justify-content-right my-3 filter-container">
-        <el-input v-model="listQuery.searchWord" placeholder="请输入客户名/手机号" style="width: 200px;" class="filter-item" />
-        <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+        <el-input v-model="listQuery.searchWord" placeholder="请输入客户名/手机号" style="width: 200px;" />
+        <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
       </div>
       <el-table
         v-loading="listLoading"
@@ -115,14 +153,16 @@
         fit
         highlight-current-row
       >
-        <el-table-column align="center" label="序号" width="60">
+        <el-table-column align="center" label="序号" width="50">
           <template slot-scope="scope">
             {{ scope.$index + 1 }}
           </template>
         </el-table-column>
-        <el-table-column align="center" label="" width="100">
-          <template slot-scope="scope">
-            <el-tag>{{ scope.row.tagText }}</el-tag>
+        <el-table-column align="center" label="标签" width="100">
+          <template slot-scope="{row}">
+            <el-tag size="small" v-if="row.tags[0]">{{ row.tags[0] }}</el-tag>
+            <el-tag size="small" v-if="row.tags[1]">{{ row.tags[1] }}</el-tag>
+            <div style="color:#409EFF;" v-if="row.tags.length>2">....</div>
           </template>
         </el-table-column>
         <el-table-column align="center" label="客户名称" width="100">
@@ -137,15 +177,20 @@
         </el-table-column>
         <el-table-column align="center" label="客户来源">
           <template slot-scope="scope">
-            {{ scope.row.origin }}
+            {{ scope.row.userOrigin }}
           </template>
         </el-table-column>
         <el-table-column align="center" label="客户类型">
           <template slot-scope="scope">
-            {{ scope.row.originType }}
+            {{ scope.row.userType }}
           </template>
         </el-table-column>
-        <el-table-column align="center" label="当前责任销售" width="110">
+        <el-table-column align="center" label="客户状态" width="120">
+          <template slot-scope="scope">
+            {{ scope.row.userLevel }}
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="当前责任销售">
           <template slot-scope="scope">
             {{ scope.row.sellerCurrent }}
           </template>
@@ -155,30 +200,68 @@
             {{ scope.row.distributeTime }}
           </template>
         </el-table-column>
-        <el-table-column label="上次跟进销售" align="center" width="110">
+        <el-table-column label="上次跟进销售" align="center">
           <template slot-scope="scope">
             {{ scope.row.sellerPast }}
           </template>
         </el-table-column>
-        <el-table-column label="上次登录时间" align="center" width="110">
+        <el-table-column label="积分余额" align="center" width="110">
           <template slot-scope="scope">
-            {{ scope.row.loginTime }}
+            {{ scope.row.remainIntegral }}
           </template>
         </el-table-column>
-        <el-table-column class-name="status-col" label="操作" align="center" width="410">
+        <el-table-column label="累积登录次数" align="center" width="110">
+          <template slot-scope="scope">
+            {{ scope.row.loginTimes }}
+          </template>
+        </el-table-column>
+        <el-table-column label="上次登录时间" align="center" width="110">
+          <template slot-scope="scope">
+            {{ scope.row.loginTimePast }}
+          </template>
+        </el-table-column>
+        <el-table-column label="客户注册时间" align="center" width="110">
+          <template slot-scope="scope">
+            {{ scope.row.registerTime }}
+          </template>
+        </el-table-column>
+        <el-table-column label="累积购买金额" align="center" width="110">
+          <template slot-scope="scope">
+            {{ scope.row.payTotal }}
+          </template>
+        </el-table-column>
+        <el-table-column class-name="status-col" label="操作" align="center" width="110" v-if="isPublic">
+          <template slot-scope="{row}">
+            <el-button size="mini" @click="handleGet(row)">领取</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column class-name="status-col" label="操作" align="center" width="330" v-else>
           <template slot-scope="{row}">
             <el-button size="mini" @click="handleFollow(row)">跟进</el-button>
             <el-button size="mini" @click="handleDelay(row)">延期</el-button>
             <el-button size="mini" @click="handleTransform(row)">流转</el-button>
             <el-button size="mini" @click="handleAdd(row)">新增订单</el-button>
-            <el-button size="mini" @click="handleGet(row)">领取</el-button>
           </template>
         </el-table-column>
       </el-table>
 
-      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="fetchData" />
+      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pagesize" @pagination="fetchData" />
 
-      <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :close-on-click-modal=false width="70%" custom-class="customerDialog">
+      <el-dialog :visible.sync="dialogFormVisible" :close-on-click-modal=false width="70%" custom-class="customerDialog">
+        <div slot="title" style="font-size:20px">
+          {{dialogTitle}} <span style="font-size: 14px;color:#999;margin:0 10px;">ID:{{rowId}}</span> <el-button size="mini" @click="handleTag">添加标签</el-button>
+        </div>
+        <el-dialog
+          width="500px"
+          title="标签设置"
+          :visible.sync="tagVisible"
+          append-to-body>
+          <tag ref="tag" :dynamicTags="dynamicTags" />
+          <div slot="footer">
+            <el-button @click="tagCancel">取 消</el-button>
+            <el-button type="primary" @click="tagSave">确定</el-button>
+          </div>
+        </el-dialog>
         <tab :temp="temp"></tab>
       </el-dialog>
     </div>
@@ -201,7 +284,7 @@
       <el-form ref="followForm" :model="followForm" style="padding-left: 40px" label-width="100px">
         <el-form-item label="跟进方式" prop="followType" :rules="{required: true, message: '请选择跟进方式'}" >
           <el-select v-model="followForm.followType" placeholder="请选择">
-            <el-option v-for="(item, key) in info.followTypeList" :key="key" :label="item.name" :value="item.value" />
+            <el-option v-for="(item, key) in followTypeList" :key="key" :label="item.name" :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item label="跟进结果" prop="followState" :rules="{required: true, message: '请选择跟进结果'}" >
@@ -215,13 +298,60 @@
         <el-form-item label="详细跟进情况" prop="detail">
           <el-input type="textarea" v-model="followForm.detail" placeholder="请输入详细跟进情况"></el-input>
         </el-form-item>
+        <el-form-item label="上传图片">
+          <el-upload
+            class="uploader-container"
+            :action="uploadUrl"
+            :headers="uploadHeaders"
+            :show-file-list="false"
+            :on-success="followFormImgUploadSuccess"
+            :before-upload="followFormImgUpload">
+            <img v-if="followForm.image" :src="followForm.image" class="uploader-img">
+            <i v-else class="el-icon-plus uploader-icon"></i>
+          </el-upload>
+        </el-form-item>
         <el-form-item>
-          <el-button @click="dialogFollowFormVisible = false; resetForm('followForm')">取 消</el-button>
+          <el-button @click="dialogFollowFormVisible = false; followForm.image = ''; resetForm('followForm')">取 消</el-button>
           <el-button type="primary" @click="followFormSubmit">确 定</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
 
+    <el-dialog title="新增订单" :visible.sync="dialogAddFormVisible" :close-on-click-modal=false width="500px">
+      <el-form ref="addForm" :model="addForm" style="padding-left: 40px" label-width="100px">
+        <el-form-item label="购买产品" prop="orderService" :rules="{required: true, message: '请选择购买产品'}" >
+          <el-select v-model="addForm.orderService" placeholder="请选择">
+            <el-option v-for="(item, key) in orderServiceList" :key="key" :label="item.name" :value="item.value" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="购买版本" prop="type" :rules="{required: true, message: '请选择购买版本'}" >
+          <el-select v-model="addForm.type" placeholder="请选择">
+            <el-option v-for="(item, key) in addForm.typeList" :key="key" :label="item.name" :value="item.value" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="付款方式" prop="payType" :rules="{required: true, message: '请选择付款方式'}" >
+          <el-select v-model="addForm.payType" placeholder="请选择">
+            <el-option v-for="(item, key) in addForm.payTypeList" :key="key" :label="item.name" :value="item.value" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="上传凭证">
+          <el-upload
+            class="uploader-container"
+            :action="uploadUrl"
+            :headers="uploadHeaders"
+            :show-file-list="false"
+            :on-success="addFormImgUploadSuccess"
+            :before-upload="addFormImgUpload">
+            <img v-if="addForm.image" :src="addForm.image" class="uploader-img">
+            <i v-else class="el-icon-plus uploader-icon"></i>
+          </el-upload>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="dialogAddFormVisible = false; addForm.image = ''; resetForm('addForm')">取 消</el-button>
+          <el-button type="primary" @click="addFormSubmit">确 定</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -229,14 +359,18 @@
 import Top from './Top'
 import Tab from './Tab'
 import Pagination from '@/components/Pagination'
-import { getCustomerList, customerDelay, customerTransform, customerFollow } from '@/api/customer'
+import Tag from '@/components/Tag'
+import * as config from '@/utils/config'
+import { getCustomerList, getPublicCustomerList, customerDelay, customerTransform, customerFollow, customerAdd, customerGet, customerAddTags } from '@/api/customer'
+import { regionData, CodeToText } from 'element-china-area-data'
 
 export default {
   name: 'CustomerInfo',
   components: {
     Top,
     Pagination,
-    Tab
+    Tab,
+    Tag
   },
   props: {
     isPublic: {
@@ -246,48 +380,38 @@ export default {
   },
   data() {
     return {
+      locationData: regionData,
+      locationSelect: [],
+      levelList: config.userLevel,
+      originTypeList: config.originType,
+      orderServiceList: config.orderService,
+      salesRange: [
+        { text: '< 1', value: '{"min":"", "max":1}'},
+        { text: '1-5', value: '{"min":1, "max":5}'},
+        { text: '5-10', value: '{"min":5, "max":10}'},
+        { text: '10-30', value: '{"min":10, "max":30}'},
+        { text: '30-100', value: '{"min":30, "max":100}'},
+        { text: '> 100', value: '{"min":100, "max":""}'}
+      ],
+      salesRangeValue: '',
+      followTypeList: config.followType,
       info: {
-        regTime: '',
+        registerTime: '',
         loginTime: '',
-        level: '',
-        levelList: [
-          { 'name': '未注册客户', 'value': '0' },
-          { 'name': '试用客户', 'value': '1' },
-          { 'name': '普通会员', 'value': '2' },
-          { 'name': '高级会员', 'value': '3' },
-          { 'name': '资深会员', 'value': '4' },
-          { 'name': '企业标准版', 'value': '5' },
-          { 'name': '企业全能版', 'value': '6' },
-          { 'name': '企业定制版', 'value': '7' },
-        ],
-        location: '',
-        locationList: [
-          { 'name': '北京', 'value': '0' },
-          { 'name': '广东', 'value': '1' },
-          { 'name': '湖南', 'value': '8' }
-        ],
-        originType: '',
-        originTypeList: [
-          { 'name': 'SellerMotor', 'value': '0' },
-          { 'name': '销售', 'value': '1' },
-          { 'name': '渠道', 'value': '8' }
-        ],
+        userLevel: '',
+        location: [],
+        userOrigin: '',
         orderService: '',
-        orderServiceList: [
-          { 'name': '选品服务', 'value': '0' },
-          { 'name': 'ASIN反查', 'value': '1' },
-        ],
         salesMin: '',
         salesMax: '',
-        tag: {},
-        useTimes: '',
-        remainTime: '',
-        remainIntegral: '',
+        tag: '',
+        useTimesMin: '',
+        useTimesMax: '',
+        remainTimeMin: '',
+        remainTimeMax: '',
+        remainIntegralMin: '',
+        remainIntegralMax: '',
         followType: '',
-        followTypeList: [
-          { 'name': '电话', 'value': '0' },
-          { 'name': '微信', 'value': '1' },
-        ],
         followTime: '',
         orderTime: '',
         distributeTime: ''
@@ -297,7 +421,8 @@ export default {
       total: 0,
       listQuery: {
         page: 1,
-        limit: 10,
+        pagesize: 10,
+        searchWord: ''
       },
       temp: {
         id: undefined,
@@ -307,7 +432,7 @@ export default {
         qq: '',
         company: '',
         tel: '',
-        origin: '',
+        origin: ''
       },
       dialogTitle: '',
       dialogFormVisible: false,
@@ -315,138 +440,251 @@ export default {
       transform: {
         seller: '',
         sellerList: [
-          { 'name': 'Carol', 'value': '0' },
-          { 'name': 'Bob', 'value': '1' }
+          { name: 'Carol', value: 0 },
+          { name: 'Bob', value: 1 }
         ]
       },
       dialogTransformVisible: false,
       followForm: {
         followType: '',
         followState: '',
-        followStateList: [
-          { 'name': '已结束', 'value': '0' },
-          { 'name': '跟进中', 'value': '1' },
-        ],
+        followStateList: config.followState,
         feedback: '',
-        detail: ''
+        detail: '',
+        image: ''
       },
-      dialogFollowFormVisible: false
+      dialogFollowFormVisible: false,
+      addForm: {
+        orderService: '',
+        type: '',
+        typeList: config.orderServiceVersion,
+        payType: '',
+        payTypeList: config.payType,
+        image: ''
+      },
+      dialogAddFormVisible: false,
+      tagVisible: false,
+      dynamicTags: [],
+      uploadHeaders: {'SM-Token': this.$store.state.user.token},
+      uploadUrl: process.env.VUE_APP_BASE_API + '/operate/upload-img'
     }
   },
   created() {
     this.fetchData()
   },
   computed: {
-    
+   
   },
   methods: {
     fetchData() {
-        this.listLoading = true
-        getCustomerList(this.listQuery).then(response => {
-          this.list = response.data.items
+      this.listLoading = true
+      const query = Object.assign({}, this.listQuery, this.info)
+      if (this.isPublic) {
+        getPublicCustomerList(query).then(response => {
+          this.list = response.data.list
           this.listLoading = false
           this.total = response.data.total
         })
-      },
-      handleFilter() {
-        this.listQuery.page = 1
-        this.fetchData()
-      },
-      handleSearch() {
-        // this.listQuery.page = 1
-        // this.fetchData()
-      },
-      handleDetail(row) {
-        this.temp = Object.assign({}, row) // copy obj
-        this.dialogFormVisible = true
-        this.dialogTitle = row.name
-      },
-      handleFollow(row) {
-        this.dialogFollowFormVisible = true
-        this.rowId = row.id
-      },
-      followFormSubmit() {
-        let query = {id: this.rowId}
-        for( let key of Object.keys(this.followForm)) {
+      }
+      else {
+        getCustomerList(query).then(response => {
+          this.list = response.data.list
+          this.listLoading = false
+          this.total = response.data.total
+        })
+      }
+    },
+    locationChange (value) {
+      this.info.location = []
+      for (let i of value) {
+        this.info.location.push(CodeToText[i])
+      }
+    },
+    salesRangeChange() {
+      let rangeValue = JSON.parse(this.salesRangeValue)
+      this.info.salesMin = rangeValue.min
+      this.info.salesMax = rangeValue.max
+    },
+    handleFilter() {
+      this.listQuery.page = 1
+      this.fetchData()
+    },
+    handleDetail(row) {
+      this.temp = row
+      this.dialogFormVisible = true
+      this.rowId = row.userId
+      this.dialogTitle = row.name
+    },
+    handleTag() {
+      this.dynamicTags = [...this.temp.tags]
+      this.tagVisible = true
+    },
+    tagSave() {
+      let query = {userId: this.rowId, tags: this.dynamicTags}
+      customerAddTags(query).then(response => {
+        this.$message({
+          type: 'success',
+          message: '标签设置成功!'
+        });
+        this.temp.tags = [...this.dynamicTags]
+        this.tagVisible = false
+      })
+    },
+    tagCancel() {
+      this.dynamicTags = []
+      this.tagVisible = false
+    },
+    handleFollow(row) {
+      this.dialogFollowFormVisible = true
+      this.rowId = row.userId
+    },
+    followFormImgUpload(file) {
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isLt2M;
+    },
+    followFormImgUploadSuccess(res, file) {
+      // this.followForm.imageUrl = URL.createObjectURL(file.raw)
+      this.followForm.image = res.data.path
+    },
+    followFormSubmit() {
+      let query = {userId: this.rowId}
+      for( let key of Object.keys(this.followForm)) {
+        if (key !== 'followStateList') {
           query[key] = this.followForm[key]
         }
-        
-        console.log(query)
-        // let query = {id: this.rowId, seller: this.transform.seller}
-        this.$refs['followForm'].validate((valid) => {
-          if (valid) {
-            customerFollow(query).then(response => {
-              this.$message({
-                type: 'success',
-                message: '流转客户成功!'
-              });
-              this.dialogFollowFormVisible = false
-            })
-          } else {
-            return false;
-          }
-        });
-      },
-      handleDelay(row) {
-        this.$confirm('每个客户只有1次7天延期机会', '', {
-          confirmButtonText: '确认',
-          cancelButtonText: '取消',
-          closeOnClickModal: false,
-          center: true,
-        }).then((action) => {
-          customerDelay(row.id).then(response => {
+      }
+      this.$refs['followForm'].validate((valid) => {
+        if (valid) {
+          customerFollow(query).then(response => {
             this.$message({
               type: 'success',
-              message: '延期成功!'
+              message: '添加跟进记录成功!'
             });
+            this.dialogFollowFormVisible = false
           })
-        }).catch(() => {
-          
+        } else {
+          return false;
+        }
+      });
+    },
+    handleDelay(row) {
+      this.$confirm('每个客户只有1次7天延期机会', '', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        closeOnClickModal: false,
+        center: true,
+      }).then((action) => {
+        customerDelay({userId: row.userId}).then(response => {
+          this.$message({
+            type: 'success',
+            message: '延期成功!'
+          });
         })
-      },
-      handleTransform(row) {
-        this.dialogTransformVisible = true
-        this.rowId = row.id
-      },
-      transformSubmit() {
-        let query = {id: this.rowId, seller: this.transform.seller}
-        this.$refs['transform'].validate((valid) => {
-          if (valid) {
-            customerTransform(query).then(response => {
-              this.$message({
-                type: 'success',
-                message: '流转客户成功!'
-              });
-              this.dialogTransformVisible = false
-            })
-          } else {
-            return false;
-          }
-        });
-      },
-      handleAdd(row) {
+      }).catch(() => {
         
-      },
-      handleGet() {
-
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
+      })
+    },
+    handleTransform(row) {
+      this.dialogTransformVisible = true
+      this.rowId = row.userId
+    },
+    transformSubmit() {
+      let query = {userId: this.rowId, seller: this.transform.seller}
+      this.$refs['transform'].validate((valid) => {
+        if (valid) {
+          customerTransform(query).then(response => {
+            this.$message({
+              type: 'success',
+              message: '流转客户成功!'
+            });
+            this.dialogTransformVisible = false
+          })
+        } else {
+          return false;
+        }
+      });
+    },
+    handleAdd(row) {
+      this.dialogAddFormVisible = true
+      this.rowId = row.userId
+    },
+    addFormImgUpload(file) {
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
       }
+      return isLt2M;
+    },
+    addFormImgUploadSuccess(res, file) {
+      // this.addForm.imageUrl = URL.createObjectURL(file.raw)
+      this.addForm.image = res.data.path
+    },
+    addFormSubmit() {
+      let query = {userId: this.rowId}
+      for( let key of Object.keys(this.addForm)) {
+        if (key !== 'typeList' && key !== 'payTypeList') {
+          query[key] = this.addForm[key]
+        }
+      }
+      this.$refs['addForm'].validate((valid) => {
+        if (valid) {
+          customerAdd(query).then(response => {
+            this.$message({
+              type: 'success',
+              message: '新增订单成功!'
+            });
+            this.dialogAddFormVisible = false
+          })
+        } else {
+          return false;
+        }
+      });
+    },
+    handleGet(row) {
+      this.$confirm(`<h2 class="font-normal">确认将${row.name}加入至我的客户中</h2><p>你每天有20次领取客户的机会，剩余9次</p>`, '', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        closeOnClickModal: false,
+        dangerouslyUseHTMLString: true,
+        center: true,
+      }).then((action) => {
+        customerGet({userId: row.userId}).then(response => {
+          this.$message({
+            type: 'success',
+            message: '领取成功!'
+          });
+        })
+      }).catch(() => {
+        
+      })
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    }
   }
 }
 </script>
 
+<style lang="scss">
+  .sales {
+    >.el-form-item__label {
+      line-height: 18px;
+    }
+  }
+</style>
 <style lang='scss' scoped>
   .el-form-item--small.el-form-item {
     margin-bottom: 8px;
   }
-  .info >>>.el-form-item--small .el-form-item__label {
-    font-size: 12px;
-  }
   .SearchBasic {
     .el-card {
-      height: 400px;
+      height: 460px;
+      .el-input, .el-select, .el-cascader {
+        width: 100%;
+      }
     }
   }
   .link-type {
@@ -454,8 +692,27 @@ export default {
     cursor: pointer;
   }
 
-  .salesline {
+  .line {
     text-align: center;
     padding: 0!important;
+  }
+  .uploader-container {
+    .uploader-icon {
+      font-size: 28px;
+      color: #8c939d;
+      width: 120px;
+      height: 120px;
+      line-height: 120px;
+      border: 1px dashed #d9d9d9;
+      border-radius: 6px;
+      text-align: center;
+      &:hover {
+        border-color: #409EFF;
+      }
+    }
+    .uploader-img {
+      width: 120px;
+      height: 120px;
+    }
   }
 </style>

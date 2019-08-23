@@ -11,23 +11,23 @@
     >
       <el-table-column width="200px" label="时间">
         <template slot-scope="scope">
-          <span>{{ scope.row.time }}</span>
+          <span>{{ scope.row.date }}</span>
         </template>
       </el-table-column>
 
       <el-table-column min-width="300px" :label="title">
         <template slot-scope="{row}">
-          <span>{{ row.title }}</span>
+          <span>{{ row.detail }}</span>
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pagesize" @pagination="getList" />
   </div>
 </template>
 
 <script>
 import Pagination from '@/components/Pagination'
-import { getAchievementRecords } from '@/api/customer'
+import { getCustomerRecords } from '@/api/customer'
 
 export default {
   name: 'AchievementTabPane',
@@ -51,7 +51,7 @@ export default {
       total: 0,
       listQuery: {
         page: 1,
-        limit: 10,
+        pagesize: 10,
         type: this.type
       }
     }
@@ -62,8 +62,8 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      getAchievementRecords(this.listQuery).then(response => {
-        this.list = response.data.items
+      getCustomerRecords(this.listQuery).then(response => {
+        this.list = response.data.list
         this.listLoading = false
         this.total = response.data.total
       })

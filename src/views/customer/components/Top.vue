@@ -1,18 +1,18 @@
 <template>
   <div class="head">
     <div class="flex align-items-center top">
-      <div class="fLeft"><img width="90" :src="userInfo.avatarUrl" ></div>
+      <div class="fLeft"><img :src="avatar" ></div>
       <div class="flex-1 fMidle">
-        <h3 class="mt-0">早安，{{userInfo.name}},祝你开心每一天！</h3>
+        <h3 class="mt-0">早安，{{name}}，祝你开心每一天！</h3>
         <div>
-          <span>{{userInfo.position}}</span>
+          <span>{{position}}</span>
           <span>|</span>
-          <span>{{userInfo.department}}</span>
+          <span>{{department}}</span>
         </div>
       </div>
       <div class="fRight">
         <ul class="flex">
-          <li v-for="(item, key) in userInfo.achievement" :key="key">
+          <li v-for="(item, key) in achievement" :key="key">
             <span class="dec">{{item.dec}}</span>
             <span class="num">{{item.num}}</span>
           </li>
@@ -20,13 +20,12 @@
       </div>
     </div>
     <div class="tab my-3">
-      <el-row :span="12">
-        <el-col :span="12">
+      <el-row>
+        <el-col :span="12" style="display: none;">
           <router-link class="el-button" :class="activeClass(item)" v-for="(item, key) in tabBtn" :key="key" :to="item.path">{{item.name}}</router-link>
         </el-col>
-        <el-col :span="8" :offset="4">
-          <el-date-picker v-model="searchTime" type="date" placeholder="Pick a date" style="width: 100%;" v-if="routhPath=='/customer/achievement'"/>
-          <div v-if="routhPath=='/customer/public-customer'">
+        <el-col :span="8" :offset="16">
+          <div v-if="routhPath=='/customer/public-customer'" style="display:none;">
             <el-input v-model="searchInput" placeholder="请输入客户名" style="width: 200px;" class="search-item" @keyup.enter.native="handleFilter" />
             <el-button class="search-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
           </div>
@@ -37,31 +36,28 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'Top',
   data() {
     return {
-      userInfo: {
-        avatarUrl: '',
-        name: 'Bob',
-        position: '销售组长',
-        department: 'SellerMoto销售部',
-        achievement: [
-          { 'dec': '历史总单量', 'num': '234' },
-          { 'dec': '历史总业绩', 'num': '234' },
-          { 'dec': '团队内排名', 'num': '2/10' }
-        ]
-      },
       tabBtn: [
         { 'name': '我的业绩', 'path': '/customer/achievement'},
         { 'name': '我的客户', 'path': '/customer/own-customer'},
         { 'name': '公有客户池', 'path': '/customer/public-customer'}
       ],
-      searchTime: '',
       searchInput: '',
     }
   },
   computed: {
+    ...mapGetters([
+      'name',
+      'avatar',
+      'position',
+      'department',
+      'achievement'
+    ]),
     routhPath() {
       return this.$route.path
     }
@@ -83,9 +79,14 @@ export default {
   .top {
     padding: 15px 20px;
     border: 1px solid #dcdfe6;
+    font-size: 16px;
     .fLeft {
-      width: 90px;
       margin-right: 20px;
+      img {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+      }
     }
     .fRight {
       li {
