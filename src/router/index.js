@@ -46,31 +46,68 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/customer'
+    redirect: '/achievement'
   },
 
+  // {
+  //   path: '/customer',
+  //   component: Layout,
+  //   redirect: '/customer/achievement',
+  //   name: 'Customer',
+  //   meta: { title: '客户管理', icon: 'component' },
+  //   children: [
+  //     {
+  //       path: 'achievement',
+  //       name: 'Achievement',
+  //       component: () => import('@/views/customer/achievement'),
+  //       meta: { title: '我的业绩', icon: 'chart' }
+  //     },
+  //     {
+  //       path: 'own-customer',
+  //       name: 'OwnCustomer',
+  //       component: () => import('@/views/customer/own-customer'),
+  //       meta: { title: '我的客户', icon: 'user' }
+  //     },
+  //     {
+  //       path: 'public-customer',
+  //       name: 'PublicCustomer',
+  //       component: () => import('@/views/customer/public-customer'),
+  //       meta: { title: '公有客户池', icon: 'international' }
+  //     }
+  //   ]
+  // },
+
   {
-    path: '/customer',
+    path: '/achievement',
+    name: 'Achievement',
     component: Layout,
-    redirect: '/customer/achievement',
-    name: 'Customer',
-    meta: { title: '客户管理', icon: 'component' },
     children: [
       {
-        path: 'achievement',
-        name: 'Achievement',
+        path: '',
         component: () => import('@/views/customer/achievement'),
         meta: { title: '我的业绩', icon: 'chart' }
-      },
+      }
+    ]
+  },
+  {
+    path: '/own-customer',
+    name: 'OwnCustomer',
+    component: Layout,
+    children: [
       {
-        path: 'own-customer',
-        name: 'OwnCustomer',
+        path: '',
         component: () => import('@/views/customer/own-customer'),
         meta: { title: '我的客户', icon: 'user' }
-      },
+      }
+    ]
+  },
+  {
+    path: '/public-customer',
+    name: 'PublicCustomer',
+    component: Layout,
+    children: [
       {
-        path: 'public-customer',
-        name: 'PublicCustomer',
+        path: '',
         component: () => import('@/views/customer/public-customer'),
         meta: { title: '公有客户池', icon: 'international' }
       }

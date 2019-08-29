@@ -6,7 +6,7 @@
       <span class="bg"></span>
       <div>
         <span class="dec">总单量</span>
-        <span class="num">{{totalNum}}</span>
+        <span class="num">{{total}}</span>
       </div>
       <div>
         <span class="dec">总业绩</span>
@@ -35,11 +35,6 @@
         fit
         highlight-current-row
       >
-        <el-table-column align="center" label="序号" width="60">
-          <template slot-scope="scope">
-            {{ scope.$index + 1 }}
-          </template>
-        </el-table-column>
         <el-table-column align="center" label="时间" width="160">
           <template slot-scope="scope">
             <span>{{ scope.row.date }}</span>
@@ -74,7 +69,7 @@
 
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pagesize" @pagination="fetchData" />
 
-      <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :close-on-click-modal=false width="70%" custom-class="achievementDialog">
+      <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :close-on-click-modal=false width="60%" custom-class="achievementDialog">
         <div slot="title" style="font-size:20px">
           {{dialogTitle}} <span style="font-size: 14px;color:#999;margin:0 10px;">ID:{{rowId}}</span>
         </div>
@@ -100,8 +95,7 @@ export default {
     },
     data() {
       return {
-        totalNum: '234',
-        totalMoney: '10000.00',
+        totalMoney: '0',
         list: null,
         listLoading: true,
         total: 0,
@@ -140,6 +134,7 @@ export default {
           this.list = response.data.list
           this.listLoading = false
           this.total = response.data.total
+          this.totalMoney = response.data.totalMoney
         })
       },
       handleFilter() {
@@ -158,6 +153,17 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+  .achievementDialog {
+    .el-dialog__body {
+      padding-top: 0;
+    }
+    .pagination-container {
+      padding: 16px 16px 0;
+    }
+  }
+</style>
 
 <style lang='scss' scoped>
   @import "~@/styles/variables.scss";

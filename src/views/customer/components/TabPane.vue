@@ -7,7 +7,7 @@
       border
       fit
       highlight-current-row
-      height="400px"
+      height="310px"
     >
       <el-table-column width="200px" label="时间">
         <template slot-scope="scope">
@@ -35,6 +35,10 @@ export default {
     Pagination
   },
   props: {
+    userId: {
+      type: String,
+      default: undefined
+    },
     type: {
       type: String,
       default: 'order'
@@ -59,10 +63,16 @@ export default {
   created() {
     this.getList()
   },
+  watch: {
+    userId(val) {
+      this.getList()
+    }
+  },
   methods: {
     getList() {
       this.listLoading = true
-      getCustomerRecords(this.listQuery).then(response => {
+      const query = Object.assign({}, this.listQuery, {userId: this.userId})
+      getCustomerRecords(query).then(response => {
         this.list = response.data.list
         this.listLoading = false
         this.total = response.data.total

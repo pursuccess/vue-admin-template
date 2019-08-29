@@ -6,6 +6,8 @@ const getters = {
   name: state => state.user.name,
   position: state => state.user.position,
   department: state => state.user.department,
-  achievement: state => state.user.achievement
+  achievement: state => state.user.achievement,
+  pick_quota_remain: state => state.user.pick_quota_remain,
+  pick_quota_today: state => state.user.pick_quota_today
 }
 export default getters

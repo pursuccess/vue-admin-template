@@ -61,8 +61,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'leon_li',
-        password: '123456789'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur' }],

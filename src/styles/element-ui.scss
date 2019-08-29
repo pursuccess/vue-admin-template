@@ -48,3 +48,23 @@
     width: auto;
   }
 } 
+
+.uploader-container {
+  .uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 120px;
+    height: 120px;
+    line-height: 120px;
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    text-align: center;
+    &:hover {
+      border-color: #409EFF;
+    }
+  }
+  .uploader-img {
+    width: 120px;
+    height: 120px;
+  }
+}

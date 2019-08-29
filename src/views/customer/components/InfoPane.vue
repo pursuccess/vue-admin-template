@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-form :rules="rules" :model="temp" label-position="right" label-width="70px" style="width: 400px; margin-left:50px;">
+  <div class="infoPanne">
+    <el-form :rules="rules" :model="temp" label-position="right" label-width="70px" size="small" style="width: 400px; margin-left:50px;">
       <el-form-item label="客户名称">
         <div style="padding: 0 15px;">{{temp.name}}</div>
       </el-form-item>
@@ -83,9 +83,14 @@ export default {
 </script>
 
 <style lang="scss">
-  .no-border {
-    .el-input__inner {
-      border: none;
+  .infoPanne {
+    .no-border {
+      .el-input__inner {
+        border: none;
+      }
+    }
+    .el-form-item--small.el-form-item {
+      margin-bottom: 8px;
     }
   }
 </style>

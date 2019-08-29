@@ -8,7 +8,9 @@ const state = {
   avatar: '',
   position: '',
   department: '',
-  achievement: []
+  achievement: [],
+  pick_quota_remain: '',
+  pick_quota_today: ''
 }
 
 const mutations = {
@@ -29,6 +31,12 @@ const mutations = {
   },
   SET_ACHIEVEMENT: (state, achievement) => {
     state.achievement = achievement
+  },
+  SET_PICKQUOTAREMAIN: (state, pick_quota_remain) => {
+    state.pick_quota_remain = pick_quota_remain
+  },
+  SET_PICKQUOTATODAY: (state, pick_quota_today) => {
+    state.pick_quota_today = pick_quota_today
   }
 }
 
@@ -58,13 +66,15 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
 
-        const { name, avatar, position, department, achievement } = data
+        const { name, avatar, position, department, achievement, pick_quota_remain, pick_quota_today } = data
 
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
         commit('SET_POSITION', position)
         commit('SET_DEPARTMENT', department)
         commit('SET_ACHIEVEMENT', achievement)
+        commit('SET_PICKQUOTAREMAIN', pick_quota_remain)
+        commit('SET_PICKQUOTATODAY', pick_quota_today)
         resolve(data)
       }).catch(error => {
         reject(error)

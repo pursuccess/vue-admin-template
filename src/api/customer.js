@@ -1,89 +1,97 @@
 import request from '@/utils/request'
 
-export function getAchievementList(params) { // 我的业绩列表
+export function getAchievementList(data) { // 我的业绩列表
   return request({
     url: '/customer/achievement-list',
-    method: 'get',
-    params
+    method: 'post',
+    data
   })
 }
 
-export function getCustomerRecords(params) {
+export function getCustomerRecords(data) {
   return request({
     url: '/customer/customer-records',
-    method: 'get',
-    params
+    method: 'post',
+    data
   })
 }
 
-export function customerInfoSave(params) {
+export function customerInfoSave(data) {
   return request({
-    url: '/customer/customer-infosave',
-    method: 'get',
-    params
+    url: '/customer/customer-info-save',
+    method: 'post',
+    data
   })
 }
 
-export function getCustomerList(params) { // 我的客户列表
+export function getCustomerList(data) { // 我的客户列表
   return request({
     url: '/customer/customer-list',
-    method: 'get',
-    params
+    method: 'post',
+    data
   })
 }
 
-export function getPublicCustomerList(params) { // 公共客户池
+export function getPublicCustomerList(data) { // 公共客户池
   return request({
     url: '/customer/public-customer-list',
-    method: 'get',
-    params
+    method: 'post',
+    data
   })
 }
 
-export function customerDelay(params) {
+export function customerDelay(data) {
   return request({
     url: '/customer/customer-delay',
-    method: 'get',
-    params
+    method: 'post',
+    data
   })
 }
 
-export function customerTransform(params) {
+export function customerTransform(data) {
   return request({
     url: '/customer/customer-transform',
-    method: 'get',
-    params
+    method: 'post',
+    data
   })
 }
 
-export function customerFollow(params) {
+export function customerFollow(data) {
   return request({
     url: '/customer/customer-follow',
-    method: 'get',
-    params
+    method: 'post',
+    data
   })
 }
 
-export function customerAdd(params) {
+export function customerAdd(data) {
   return request({
-    url: '/customer/customer-addOrder',
-    method: 'get',
-    params
+    url: '/customer/customer-add-order',
+    method: 'post',
+    data
   })
 }
 
-export function customerGet(params) {
+export function customerGet(data) {
   return request({
     url: '/customer/pick',
-    method: 'get',
-    params
+    method: 'post',
+    data
   })
 }
 
-export function customerAddTags(params) {
+export function customerAddTags(data) {
   return request({
-    url: '/customer/customer-addtags',
-    method: 'get',
-    params
+    url: '/customer/customer-add-tags',
+    method: 'post',
+    data
+  })
+}
+
+export function getCustomerSellers(data) {
+  return request({
+    url: '/customer/customer-sellers',
+    method: 'post',
+    data
   })
 }

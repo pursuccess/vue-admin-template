@@ -5,6 +5,9 @@ const tokens = {
   },
   editor: {
     token: 'editor-token'
+  },
+  leon_li: {
+    token: 'sm'
   }
 }
 
@@ -20,6 +23,19 @@ const users = {
     introduction: 'I am an editor',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'Normal Editor'
+  },
+  'sm': {
+    roles: ['admin'],
+    introduction: 'I am a super administrator',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    name: 'Super Admin',
+    position: '销售组长',
+    department: 'SellerMotor销售部',
+    achievement: [
+      { 'dec': '历史总单量', 'num': '234' },
+      { 'dec': '历史总业绩', 'num': '234' },
+      { 'dec': '团队内排名', 'num': '2/10' }
+    ]
   }
 }
 
@@ -41,7 +57,8 @@ export default [
       }
 
       return {
-        code: 20000,
+        // code: 20000,
+        result: 1,
         data: token
       }
     }
@@ -64,7 +81,8 @@ export default [
       }
 
       return {
-        code: 20000,
+        // code: 20000,
+        result: 1,
         data: info
       }
     }
@@ -76,7 +94,8 @@ export default [
     type: 'post',
     response: _ => {
       return {
-        code: 20000,
+        // code: 20000,
+        result: 1,
         data: 'success'
       }
     }

@@ -5,7 +5,7 @@
         <info-pane ref="infoForm" v-show="activeName=='info'" :temp="temp" @formSave="formSave" v-loading="infoLoading"></info-pane>
       </el-tab-pane>
       <el-tab-pane v-for="item in tabMapOptionsFilter" :label="item.label" :key="item.key" :name="item.key">
-        <tab-pane v-show="activeName==item.key" :type="item.key" :title="item.label + '详情'" />
+        <tab-pane v-show="activeName==item.key" :type="item.key" :title="item.label + '详情'" :userId="temp.userId" />
       </el-tab-pane>
     </el-tabs>
   </div>
