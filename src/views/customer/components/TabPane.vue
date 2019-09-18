@@ -60,18 +60,18 @@ export default {
       }
     }
   },
-  created() {
-    this.getList()
-  },
   watch: {
     userId(val) {
       this.getList()
     }
   },
+  created() {
+    this.getList()
+  },
   methods: {
     getList() {
       this.listLoading = true
-      const query = Object.assign({}, this.listQuery, {userId: this.userId})
+      const query = Object.assign({}, this.listQuery, { userId: this.userId })
       getCustomerRecords(query).then(response => {
         this.list = response.data.list
         this.listLoading = false

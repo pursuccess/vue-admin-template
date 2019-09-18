@@ -6,10 +6,10 @@
 import CustomerInfo from './components/CustomerInfo'
 
 export default {
-  name: "OwnCustomer",
+  name: 'OwnCustomer',
   components: {
     CustomerInfo
-  },
+  }
 }
 </script>
 

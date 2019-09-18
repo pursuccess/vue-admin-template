@@ -2,10 +2,10 @@
   <div class="tab-container">
     <el-tabs v-model="activeName" style="margin-top:15px;" type="border-card">
       <el-tab-pane label="基本信息" name="info">
-        <info-pane ref="infoForm" v-show="activeName=='info'" :temp="temp" @formSave="formSave" v-loading="infoLoading"></info-pane>
+        <info-pane v-show="activeName=='info'" ref="infoForm" v-loading="infoLoading" :temp="temp" @formSave="formSave" />
       </el-tab-pane>
-      <el-tab-pane v-for="item in tabMapOptionsFilter" :label="item.label" :key="item.key" :name="item.key">
-        <tab-pane v-show="activeName==item.key" :type="item.key" :title="item.label + '详情'" :userId="temp.userId" />
+      <el-tab-pane v-for="item in tabMapOptionsFilter" :key="item.key" :label="item.label" :name="item.key">
+        <tab-pane v-show="activeName==item.key" :type="item.key" :title="item.label + '详情'" :user-id="temp.userId" />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -18,14 +18,14 @@ import { customerInfoSave } from '@/api/customer'
 
 export default {
   name: 'AchievementTab',
-  components: { 
+  components: {
     TabPane,
     InfoPane
   },
   props: {
     temp: {
       type: Object,
-      default: function () {
+      default: function() {
         return {
           userId: undefined,
           name: '',
@@ -34,10 +34,10 @@ export default {
           qq: '',
           company: '',
           tel: '',
-          userOrigin: '',
+          userOrigin: ''
         }
       }
-    },
+    }
   },
   data() {
     return {
@@ -51,13 +51,13 @@ export default {
       infoLoading: false
     }
   },
-  created() {
-   
-  },
   computed: {
     tabMapOptionsFilter() {
       return this.tabMapOptions.slice(1)
     }
+  },
+  created() {
+
   },
   methods: {
     formSave(data) {
@@ -68,7 +68,7 @@ export default {
         this.$message({
           message: 'Save Successfully',
           type: 'success'
-        });
+        })
       })
     }
   }
@@ -76,5 +76,5 @@ export default {
 </script>
 
 <style scoped>
- 
+
 </style>

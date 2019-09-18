@@ -6,6 +6,10 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 
+/* Router Modules */
+import customerRouter from './modules/customer'
+import wxRouter from './modules/weixin'
+
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -45,9 +49,8 @@ export const constantRoutes = [
 
   {
     path: '/',
-    component: Layout,
-    redirect: '/achievement'
-  },
+    component: Layout
+  }
 
   // {
   //   path: '/customer',
@@ -76,43 +79,15 @@ export const constantRoutes = [
   //     }
   //   ]
   // },
+]
 
-  {
-    path: '/achievement',
-    name: 'Achievement',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/customer/achievement'),
-        meta: { title: '我的业绩', icon: 'chart' }
-      }
-    ]
-  },
-  {
-    path: '/own-customer',
-    name: 'OwnCustomer',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/customer/own-customer'),
-        meta: { title: '我的客户', icon: 'user' }
-      }
-    ]
-  },
-  {
-    path: '/public-customer',
-    name: 'PublicCustomer',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/customer/public-customer'),
-        meta: { title: '公有客户池', icon: 'international' }
-      }
-    ]
-  },
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [
+  ...customerRouter,
+  ...wxRouter,
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

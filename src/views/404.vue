@@ -1,4 +1,4 @@
-  <template>
+<template>
   <div class="wscn-http404-container">
     <div class="wscn-http404">
       <div class="pic-404">
@@ -9,9 +9,9 @@
       </div>
       <div class="bullshit">
         <div class="bullshit__oops">404!</div>
-        <div class="bullshit__headline">{{ message }}</div>
-        <div class="bullshit__info">Please check that the URL you entered is correct, or click the button below to return to the homepage.</div>
-        <a href="" class="bullshit__return-home">Back to home</a>
+        <div class="bullshit__headline" />
+        <div class="bullshit__info">请检查地址是否错误，或者点击下方链接回到首页</div>
+        <a href="" class="bullshit__return-home">回到首页</a>
       </div>
     </div>
   </div>

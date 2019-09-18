@@ -1,20 +1,28 @@
 <template>
   <div class="head">
     <div class="flex align-items-center top">
-      <div class="fLeft"><img :src="avatar" ></div>
+      <div class="fLeft"><img :src="avatar"></div>
       <div class="flex-1 fMidle">
-        <h3 class="mt-0">早安，{{name}}，祝你开心每一天！</h3>
+        <h3 class="mt-0">早安，{{ name }}，祝你开心每一天！</h3>
         <div>
-          <span>{{position}}</span>
+          <span>{{ position }}</span>
           <span>|</span>
-          <span>{{department}}</span>
+          <span>{{ department }}</span>
         </div>
       </div>
       <div class="fRight">
         <ul class="flex">
-          <li v-for="(item, key) in achievement" :key="key">
-            <span class="dec">{{item.dec}}</span>
-            <span class="num">{{item.num}}</span>
+          <li>
+            <span class="dec">历史总单量</span>
+            <span class="num">{{ totalNum }}</span>
+          </li>
+          <li>
+            <span class="dec">历史总业绩</span>
+            <span class="num">{{ totalMoney }}</span>
+          </li>
+          <li v-if="rank">
+            <span class="dec">团队内排名</span>
+            <span class="num">{{ rank }}</span>
           </li>
         </ul>
       </div>
@@ -22,7 +30,7 @@
     <div class="tab my-3">
       <el-row>
         <el-col :span="12" style="display: none;">
-          <router-link class="el-button" :class="activeClass(item)" v-for="(item, key) in tabBtn" :key="key" :to="item.path">{{item.name}}</router-link>
+          <router-link v-for="(item, key) in tabBtn" :key="key" class="el-button" :class="activeClass(item)" :to="item.path">{{ item.name }}</router-link>
         </el-col>
         <el-col :span="8" :offset="16">
           <div v-if="routhPath=='/customer/public-customer'" style="display:none;">
@@ -43,11 +51,11 @@ export default {
   data() {
     return {
       tabBtn: [
-        { 'name': '我的业绩', 'path': '/customer/achievement'},
-        { 'name': '我的客户', 'path': '/customer/own-customer'},
-        { 'name': '公有客户池', 'path': '/customer/public-customer'}
+        { 'name': '我的业绩', 'path': '/customer/achievement' },
+        { 'name': '我的客户', 'path': '/customer/own-customer' },
+        { 'name': '公有客户池', 'path': '/customer/public-customer' }
       ],
-      searchInput: '',
+      searchInput: ''
     }
   },
   computed: {
@@ -56,7 +64,9 @@ export default {
       'avatar',
       'position',
       'department',
-      'achievement'
+      'totalNum',
+      'totalMoney',
+      'rank'
     ]),
     routhPath() {
       return this.$route.path
@@ -64,7 +74,7 @@ export default {
   },
   methods: {
     activeClass(item) {
-      return item.path == this.routhPath ? 'active' : ''
+      return item.path === this.routhPath ? 'active' : ''
     },
     handleFilter() {
 
@@ -78,7 +88,7 @@ export default {
 
   .top {
     padding: 15px 20px;
-    border: 1px solid #dcdfe6;
+    border: 1px solid $borderGrey;
     font-size: 16px;
     .fLeft {
       margin-right: 20px;

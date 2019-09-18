@@ -3,11 +3,20 @@ const tokens = {
   admin: {
     token: 'admin-token'
   },
-  editor: {
-    token: 'editor-token'
+  finance: {
+    token: 'finance'
   },
   leon_li: {
     token: 'sm'
+  },
+  sale: {
+    token: 'sale'
+  },
+  saleSupervisor: {
+    token: 'saleSupervisor'
+  },
+  saleDirector: {
+    token: 'saleDirector'
   }
 }
 
@@ -16,33 +25,56 @@ const users = {
     roles: ['admin'],
     introduction: 'I am a super administrator',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Super Admin'
+    name: 'Super Admin',
+    position: '超级管理员',
+    department: '总经办'
   },
-  'editor-token': {
-    roles: ['editor'],
-    introduction: 'I am an editor',
+  'finance': {
+    roles: ['finance'],
+    introduction: 'I am an finance',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Normal Editor'
+    name: 'finance',
+    position: '财务主管',
+    department: '财务部'
   },
   'sm': {
-    roles: ['admin'],
+    roles: ['saleSupervisor'],
     introduction: 'I am a super administrator',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Super Admin',
+    name: 'leon_li',
     position: '销售组长',
-    department: 'SellerMotor销售部',
-    achievement: [
-      { 'dec': '历史总单量', 'num': '234' },
-      { 'dec': '历史总业绩', 'num': '234' },
-      { 'dec': '团队内排名', 'num': '2/10' }
-    ]
+    department: 'SellerMotor销售部'
+  },
+  'sale': {
+    roles: ['sale'],
+    introduction: 'I am a sale',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    name: 'sale',
+    position: '销售',
+    department: 'SellerMotor销售部'
+  },
+  'saleSupervisor': {
+    roles: ['saleSupervisor'],
+    introduction: 'I am a saleSupervisor',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    name: 'saleSupervisor',
+    position: '销售组长',
+    department: 'SellerMotor销售部'
+  },
+  'saleDirector': {
+    roles: ['saleDirector'],
+    introduction: 'I am a saleDirector',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    name: 'saleDirector',
+    position: '销售总监',
+    department: 'SellerMotor销售部'
   }
 }
 
 export default [
   // user login
   {
-    url: '/user/login',
+    url: '/crm/user/login',
     type: 'post',
     response: config => {
       const { username } = config.body
@@ -66,7 +98,7 @@ export default [
 
   // get user info
   {
-    url: '/user/info\.*',
+    url: '/crm/user/info\.*',
     type: 'get',
     response: config => {
       const { token } = config.query
@@ -90,7 +122,7 @@ export default [
 
   // user logout
   {
-    url: '/user/logout',
+    url: '/crm/user/logout',
     type: 'post',
     response: _ => {
       return {

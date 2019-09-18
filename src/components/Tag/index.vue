@@ -1,27 +1,26 @@
 <template>
   <div class="tagTemplete">
     <el-tag
-      :key="key"
       v-for="(tag, key) in dynamicTags"
+      :key="key"
       closable
       :disable-transitions="false"
-      @close="handleClose(tag)"
       :style="tagStyle(key)"
+      @close="handleClose(tag)"
     >
-      {{tag}}
+      {{ tag }}
     </el-tag>
     <el-input
-      class="input-new-tag"
       v-if="inputVisible"
-      v-model="inputValue"
-      placeholder="光标移出退出编辑"
       ref="saveTagInput"
+      v-model="inputValue"
+      class="input-new-tag"
+      placeholder="光标移出退出编辑"
       size="small"
       :maxlength="maxlength"
       @keyup.enter.native="handleInputConfirm"
       @blur="handleInputConfirm"
-    >
-    </el-input>
+    />
     <el-button v-else v-show="dynamicTags.length<maxAmount" class="button-new-tag" size="small" @click="showInput">+ 标签</el-button>
   </div>
 </template>
@@ -44,7 +43,7 @@ export default {
     colors: {
       type: Array,
       default() {
-        return ['#40A9FF','#FFC53D','#73D13D','#FF4D4F','#597EF7','#F759AB','#36CFC9','#9254DE','#FFA940']
+        return ['#40A9FF', '#FFC53D', '#73D13D', '#FF4D4F', '#597EF7', '#F759AB', '#36CFC9', '#9254DE', '#FFA940']
       }
     },
     maxlength: {
@@ -70,10 +69,10 @@ export default {
     },
 
     showInput() {
-      this.inputVisible = true;
+      this.inputVisible = true
       this.$nextTick(_ => {
         this.$refs.saveTagInput.$refs.input.focus()
-      });
+      })
     },
 
     handleInputConfirm() {
