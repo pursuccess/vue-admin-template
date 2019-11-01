@@ -2,6 +2,8 @@
   <div class="customer-container">
     <top v-if="!adminId" />
 
+    <el-button v-permission="['admin']" size="mini">超级管理员才可以看到我</el-button>
+    
     <div class="SearchBasic">
       <el-row :gutter="20">
         <el-col :span="8">
@@ -425,10 +427,12 @@ import Tab from './Tab'
 import Pagination from '@/components/Pagination'
 import Tag from '@/components/Tag'
 import * as config from '@/utils/config'
+import checkPermission from '@/utils/permission'
 import { getCustomerList, getPublicCustomerList, customerDelay, customerTransform, customerFollow, customerAdd, customerGet, customerAddTags, getCustomerSellers, customerTeacher } from '@/api/customer'
 import { regionData, CodeToText } from 'element-china-area-data'
 import { isNull } from 'util'
 import { mapGetters } from 'vuex'
+import permission from '@/directive/permission/index.js'
 
 export default {
   name: 'CustomerInfo',
@@ -438,6 +442,7 @@ export default {
     Tab,
     Tag
   },
+  directives: { permission },
   props: {
     isPublic: {
       type: Boolean,
@@ -555,14 +560,11 @@ export default {
       'pick_quota_today'
     ]),
     adminId() {
-      return this.$route.path == '/own-group' ? this.$store.state.user.adminId : ''
+      return this.$route.path === '/own-group' ? this.$store.state.user.adminId : ''
     },
     teacherEditAuth() {
-      const roles = this.$store.state.user.roles
       if (this.$route.path !== '/public-customer') {
-        return ['saleSupervisor', 'saleDirector', 'admin'].some((i) => {
-          return roles.includes(i)
-        })
+        return checkPermission(['saleSupervisor', 'saleDirector', 'admin'])
       }
       return false
     }
