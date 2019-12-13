@@ -92,7 +92,6 @@
 
 <script>
 import Top from './components/Top'
-import Tab from './components/Tab'
 import Pagination from '@/components/Pagination'
 import * as config from '@/utils/config'
 import { getFinanceList, orderConfirm } from '@/api/finance'
@@ -101,8 +100,7 @@ export default {
   name: 'Finance',
   components: {
     Top,
-    Pagination,
-    Tab
+    Pagination
   },
   data() {
     return {

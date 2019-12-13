@@ -75,12 +75,10 @@
 
 <script>
 import Top from './components/Top'
-import Tab from './components/Tab'
 import Achievement from './achievement'
 import CustomerInfo from './components/CustomerInfo'
 import PageHeader from '@/components/PageHeader'
 import Pagination from '@/components/Pagination'
-import * as config from '@/utils/config'
 import { getOwnGroups } from '@/api/user'
 
 export default {
@@ -88,7 +86,6 @@ export default {
   components: {
     Top,
     Pagination,
-    Tab,
     PageHeader,
     Achievement,
     CustomerInfo

@@ -78,7 +78,7 @@ export default {
       return this.$route.path
     },
     adminId() {
-      return this.$route.path == '/own-group' ? this.$store.state.user.adminId : ''
+      return this.$route.path === '/own-group' ? this.$store.state.user.adminId : ''
     }
   },
   created() {

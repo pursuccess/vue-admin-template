@@ -110,7 +110,6 @@
 import Top from './components/Top'
 import Tab from './components/Tab'
 import Pagination from '@/components/Pagination'
-import * as config from '@/utils/config'
 import { getAchievementList } from '@/api/customer'
 // import rabbit from @/assets/rabbit.gif
 
@@ -159,7 +158,7 @@ export default {
   },
   computed: {
     adminId() {
-      return this.$route.path == '/own-group' ? this.$store.state.user.adminId : ''
+      return this.$route.path === '/own-group' ? this.$store.state.user.adminId : ''
     }
   },
   created() {

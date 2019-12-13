@@ -3,7 +3,7 @@
     <top v-if="!adminId" />
 
     <el-button v-permission="['admin']" size="mini">超级管理员才可以看到我</el-button>
-    
+
     <div class="SearchBasic">
       <el-row :gutter="20">
         <el-col :span="8">
@@ -549,11 +549,6 @@ export default {
       dialogTeacherFormVisible: false
     }
   },
-  created() {
-    this.$store.dispatch('user/getAchievement')
-    this.fetchData()
-    this.fetchSellers()
-  },
   computed: {
     ...mapGetters([
       'pick_quota_remain',
@@ -568,6 +563,11 @@ export default {
       }
       return false
     }
+  },
+  created() {
+    this.$store.dispatch('user/getAchievement')
+    this.fetchData()
+    this.fetchSellers()
   },
   methods: {
     fetchSellers() {

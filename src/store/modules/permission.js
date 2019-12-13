@@ -13,7 +13,6 @@ function hasPermission(roles, route) {
   }
 }
 
-
 /**
  * Filter asynchronous routing tables by recursion
  * @param routes 可访问的路由一维数组
@@ -40,7 +39,7 @@ export function filterAsyncRoutes(asyncRoutes, routes) {
 // routes生成name的数组
 function routesKeys(routes) {
   const res = []
-  
+
   routes.forEach(route => {
     const tmp = { ...route }
     if (tmp.children) {

@@ -20,8 +20,8 @@
       </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)" v-if="scope.row.role!='admin'">编辑</el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)" v-if="scope.row.role!='admin'">删除</el-button>
+          <el-button v-if="scope.row.role!='admin'" type="primary" size="small" @click="handleEdit(scope)">编辑</el-button>
+          <el-button v-if="scope.row.role!='admin'" type="danger" size="small" @click="handleDelete(scope)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -29,7 +29,7 @@
     <el-dialog :visible.sync="dialogVisible" :title="isEdit?'编辑角色':'新增角色'" :close-on-click-modal="false" width="550px">
       <el-form ref="role" :model="role" label-width="120px" label-position="right" style="padding-right: 40px;">
         <el-form-item label="角色role值" prop="role" :rules="{required: true, message: '请填写角色role值'}">
-          <el-input v-model="role.role" placeholder="请填写角色role值" :disabled="isEdit"/>
+          <el-input v-model="role.role" placeholder="请填写角色role值" :disabled="isEdit" />
         </el-form-item>
         <el-form-item label="角色名" prop="name" :rules="{required: true, message: '角色名'}">
           <el-input v-model="role.name" placeholder="请填写角色名" />
@@ -147,7 +147,7 @@ export default {
         center: true
       })
         .then(async() => {
-          await deleteRole({ role: row.role} )
+          await deleteRole({ role: row.role })
           this.rolesList.splice($index, 1)
           this.$message({
             type: 'success',
@@ -175,9 +175,9 @@ export default {
       const checkedKeys = this.$refs.tree.getCheckedKeys()
       const halfCheckedKeys = this.$refs.tree.getHalfCheckedKeys()
       const keys = [...checkedKeys, ...halfCheckedKeys]
-      const data = Object.assign({}, this.role, { routes: keys})
+      const data = Object.assign({}, this.role, { routes: keys })
       this.role.routes = this.generateTree(this.routes, keys)
-      
+
       this.$refs['role'].validate(async(valid) => {
         if (valid) {
           if (this.isEdit) {
@@ -202,7 +202,6 @@ export default {
           return false
         }
       })
-      
     }
   }
 }
