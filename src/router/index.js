@@ -9,6 +9,7 @@ import Layout from '@/layout'
 /* Router Modules */
 import customerRouter from './modules/customer'
 import wxRouter from './modules/weixin'
+import roleRouter from './modules/role'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -88,6 +89,7 @@ export const constantRoutes = [
 export const asyncRoutes = [
   ...customerRouter,
   ...wxRouter,
+  ...roleRouter,
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

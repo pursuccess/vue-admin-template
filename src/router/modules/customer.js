@@ -7,7 +7,6 @@ const customerRouter = [
     path: '/achievement',
     name: 'Achievement',
     component: Layout,
-    meta: { roles: ['sale', 'saleSupervisor', 'saleDirector'] },
     children: [
       {
         path: '',
@@ -17,39 +16,27 @@ const customerRouter = [
     ]
   },
   {
-    path: '/own-customer',
-    name: 'OwnCustomer',
+    path: '/customer',
+    name: 'Customer',
     component: Layout,
-    meta: { roles: ['sale', 'saleSupervisor', 'saleDirector'] },
+    meta: { title: '客户管理', icon: 'user' },
+    redirect: '/own-customer',
     children: [
       {
-        path: '',
+        path: '/own-customer',
+        name: 'OwnCustomer',
         component: () => import('@/views/customer/own-customer'),
         meta: { title: '我的客户', icon: 'user' }
-      }
-    ]
-  },
-  {
-    path: '/public-customer',
-    name: 'PublicCustomer',
-    component: Layout,
-    meta: { roles: ['sale', 'saleSupervisor', 'saleDirector'] },
-    children: [
+      },
       {
-        path: '',
+        path: '/public-customer',
+        name: 'PublicCustomer',
         component: () => import('@/views/customer/public-customer'),
         meta: { title: '公有客户池', icon: 'international' }
-      }
-    ]
-  },
-  {
-    path: '/own-group',
-    name: 'OwnGroup',
-    component: Layout,
-    meta: { roles: ['saleSupervisor', 'saleDirector'] },
-    children: [
+      },
       {
-        path: '',
+        path: '/own-group',
+        name: 'OwnGroup',
         component: () => import('@/views/customer/own-group'),
         meta: { title: '我的组员', icon: 'peoples' }
       }
@@ -59,7 +46,6 @@ const customerRouter = [
     path: '/finance',
     name: 'Finance',
     component: Layout,
-    meta: { roles: ['finance'] },
     children: [
       {
         path: '',

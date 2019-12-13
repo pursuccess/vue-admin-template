@@ -6,9 +6,6 @@ const tokens = {
   finance: {
     token: 'finance'
   },
-  leon_li: {
-    token: 'sm'
-  },
   sale: {
     token: 'sale'
   },
@@ -20,6 +17,43 @@ const tokens = {
   }
 }
 
+const routes = [
+  {
+    name: 'Achievement',
+    title: '我的业绩'
+  },
+  {
+    name: 'Customer',
+    title: '客户管理',
+    children: [
+      {
+        name: 'OwnCustomer',
+        title: '我的客户'
+      },
+      {
+        name: 'PublicCustomer',
+        title: '公有客户池'
+      },
+      {
+        name: 'OwnGroup',
+        title: '我的组员'
+      }
+    ]
+  },
+  {
+    name: 'Finance',
+    title: '财务审核'
+  },
+  {
+    name: 'TemplateList',
+    title: '模板消息'
+  },
+  {
+    name: 'Role',
+    title: '账户设置'
+  }
+]
+
 const users = {
   'admin-token': {
     roles: ['admin'],
@@ -27,7 +61,8 @@ const users = {
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'Super Admin',
     position: '超级管理员',
-    department: '总经办'
+    department: '总经办',
+    routes: routes
   },
   'finance': {
     roles: ['finance'],
@@ -35,15 +70,13 @@ const users = {
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'finance',
     position: '财务主管',
-    department: '财务部'
-  },
-  'sm': {
-    roles: ['saleSupervisor'],
-    introduction: 'I am a super administrator',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'leon_li',
-    position: '销售组长',
-    department: 'SellerMotor销售部'
+    department: '财务部',
+    routes: [
+      {
+        name: 'Finance',
+        title: '财务审核'
+      }
+    ]
   },
   'sale': {
     roles: ['sale'],
@@ -51,7 +84,27 @@ const users = {
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'sale',
     position: '销售',
-    department: 'SellerMotor销售部'
+    department: 'SellerMotor销售部',
+    routes: [
+      {
+        name: 'Achievement',
+        title: '我的业绩'
+      },
+      {
+        name: 'Customer',
+        title: '客户管理',
+        children: [
+          {
+            name: 'OwnCustomer',
+            title: '我的客户'
+          },
+          {
+            name: 'PublicCustomer',
+            title: '公有客户池'
+          }
+        ]
+      }
+    ]
   },
   'saleSupervisor': {
     roles: ['saleSupervisor'],
@@ -59,7 +112,31 @@ const users = {
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'saleSupervisor',
     position: '销售组长',
-    department: 'SellerMotor销售部'
+    department: 'SellerMotor销售部',
+    routes: [
+      {
+        name: 'Achievement',
+        title: '我的业绩'
+      },
+      {
+        name: 'Customer',
+        title: '客户管理',
+        children: [
+          {
+            name: 'OwnCustomer',
+            title: '我的客户'
+          },
+          {
+            name: 'PublicCustomer',
+            title: '公有客户池'
+          },
+          {
+            name: 'OwnGroup',
+            title: '我的组员'
+          }
+        ]
+      }
+    ]
   },
   'saleDirector': {
     roles: ['saleDirector'],

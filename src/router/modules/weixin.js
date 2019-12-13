@@ -7,7 +7,6 @@ const wxRouter = [
     path: '/template-list',
     name: 'TemplateList',
     component: Layout,
-    meta: { roles: ['wxAdmin'] },
     children: [
       {
         path: '',
@@ -18,14 +17,13 @@ const wxRouter = [
   },
   {
     path: '/template-message/:id',
+    name: 'TemplateMessage',
     component: Layout,
-    meta: { roles: ['wxAdmin'] },
     children: [
       {
         path: '',
-        name: 'TemplateMessage',
         component: () => import('@/views/weixin/template-message'),
-        meta: { title: '模板消息', icon: 'wechat', activeMenu: '/template-list' },
+        meta: { activeMenu: '/template-list' },
         hidden: true
       }
     ]
