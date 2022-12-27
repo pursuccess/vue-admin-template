@@ -51,10 +51,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~@/styles/mixin.scss";
-  @import "~@/styles/variables.scss";
+  // @import "~@/styles/mixin.scss";
+  // @import "~@/styles/variables.scss";
 
   .app-wrapper {
+    color: $colorBlack;
     @include clearfix;
     position: relative;
     height: 100%;
